@@ -1,0 +1,9 @@
+N(2000; 8100)
+f = (m.exp(((t - nu)**2) / (- 2 * sigma))) / (m.sqrt(sigma * 2 * m.pi))
+f = (exp(((t - 2000)**2) / (- 2 * 8100))) / (sqrt(8100 * 2 * pi))
+f = (exp(((x - 2000)**2) / (- 2 * 8100))) / (sqrt(8100 * 2 * pi))
+f = (exp(((x - 2000)^2) / (- 2 * 8100))) / (sqrt(8100 * 2 * pi))
+график
+https://www.desmos.com/calculator/xr3f106jtr
+мат ожидание
+https://www.wolframalpha.com/widgets/view.jsp?id=179575336961ce2ec25d581556694ea
