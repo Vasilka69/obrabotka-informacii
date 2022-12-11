@@ -1,0 +1,40 @@
+
+def zip(inp):
+    print(f'Входная последовательность: {inp}')
+    print(f'Длина последовательности: {len(inp)}')
+    powers = []
+    pow = 0
+    while 2**pow <= len(inp):
+        powers.append(2**pow)
+        pow += 1
+    print(f'Степени: {powers}')
+
+    output = ''
+    index = 0
+    for i in range(len(inp) + len(powers)):
+        if powers.__contains__(i+1):
+            output += '0'
+        else:
+            output += inp[index]
+            index += 1
+    
+    for i in powers:
+        index = i - 1
+        counter = 0
+        while index < len(output):
+            for j in range(index, index + i):
+                if j < len(output):
+                    counter += int(output[j])
+                else:
+                    break
+            index += i*2
+        output = output[:i-1] + str(counter % 2) + output[i:]
+
+    print(f'Выходная последовательность: {output}')
+
+
+
+if __name__ == '__main__':
+    inp = str(10110111001)
+    zip(inp)
+
