@@ -5,6 +5,7 @@ def A(n: int, m, k, a):
 
 def main():
     a = int(9)  # Число, корень которого нужно найти
+    print(f'a = {a}')
     m = 1
     q = 3  # Нечетное
     pminus = (2 ** m) * q  # Четное
@@ -59,7 +60,7 @@ def main():
         R.append(ri)
         rn = ri
     x0 = R[len(R) - 1]
-    print(x0)
+    print(f'Корень из a = {x0}')
     '''
     while k != 0:
         print(i)
