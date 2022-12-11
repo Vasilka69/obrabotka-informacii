@@ -4,15 +4,12 @@ def A(n: int, m, k, a):
     print()
 
 def main():
-    a = int(9)  # Число, корень которого нужно найти
     m = 1
-    q = 3  # Нечетное
-    pminus = (2 ** m) * q  # Четное
-    while pminus <= a:
-        m += 1
-        pminus = (2 ** m) * q
+    q = 3 # Нечетное    x =2,4,6
+    pminus = (2**m)*q # 6  2*x + 1 = p
     p = pminus + 1 # 7 Нечетное простое
-    print(f'p = {p}, m = {m}, q = {q}')
+    print(f'p = {p}')
+    a = int(4) # x^2 = 4
 
     Zp = []
     for i in range(p):
@@ -20,6 +17,7 @@ def main():
     print(f'Zp = {Zp}')
     b = (int(mat.sqrt(p)) + 1) ** 2
     print(f'b = {b}')
+
 
     # a = 4
     # k = 0
@@ -32,32 +30,20 @@ def main():
     K = []
     # ipow2 = 2
     # i = int(0)
-    k = int(-1)
+    k = int(0)
     print(a**((2**k)*q) % p)
-    while k != 0:
-        k = 0
-        ipow2 = 1
-        #while a**((2**k)*q) % p != 1:
-        while (a ** ((ipow2) * q)) % p != 1:
-            print(k)
-            # print(f'prepreres = {((ipow2) * q)}')
-            # print(f'preres = {(a ** ((ipow2) * q))}')
-            # print(f'res = {(a ** ((ipow2) * q)) % p}')
-            k += 1
-            ipow2 *= 2
-        K.append(k)
-        if k != 0:
-            a = A[len(A) - 1] * b**(2**(m-k)) % p
-        print(f'k = {k}')
-    #print(K)
+    while a**((2**k)*q) % p != 1:
+        k += 1
+    K.append(k)
+
     R = []
-    rn = A[len(A) - 1] ** ((q + 1) / 2) % p
+    rn = a**((q+1)/2) % p
     R.append(rn)
     for i in range(len(A), 0):
         print(i)
         ri = rn * (b**(2**(m-K[i]-1)))**(-1) % p
         R.append(ri)
-        rn = ri
+        ri = rn
     x0 = R[len(R) - 1]
     print(x0)
     '''
