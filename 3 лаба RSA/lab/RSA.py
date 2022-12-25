@@ -51,6 +51,7 @@ def RSA():
 
     # (e, n) - Открытый ключ
     # (d, n) - Закрытый ключ
+
     #print(f"c = {int(c)}")
     # m1 = math.pow(c, d) % n
     m1 = ost(c, d, n)
