@@ -58,14 +58,15 @@ def unzip(inp :str):
         summ %= 2
         if summ != ctrlBit:
             errors.append(power)
-    print(f'Контрольные биты с ошибкой: {errors}')
-
-    # Исправление
-    index = sum(errors) - 1
-    print(f'Индекс бита с ошибкой: {sum(errors)}')
-
-    output = inp[:index] + str(0) + inp[index + 1:] if inp[index] == '1' else inp[:index + 1] + str(1) + inp[index:]
-    print(f'Исправленная последовательность: {output}')
+    if len(errors) == 0:
+        print('Ошибок не найдено')
+    else:
+        print(f'Контрольные биты с ошибкой: {errors}')
+        # Исправление
+        index = sum(errors) - 1
+        print(f'Индекс бита с ошибкой: {sum(errors)}')
+        output = inp[:index] + str(0) + inp[index + 1:] if inp[index] == '1' else inp[:index + 1] + str(1) + inp[index:]
+        print(f'Исправленная последовательность: {output}')
 
 
 
@@ -75,6 +76,7 @@ if __name__ == '__main__':
     code = zip(inp)
     print()
     code = str('001001100111001')
-    code = str('001001101111001') # С ошибкой
+    #code = str('001001101111001') # С ошибкой
+    code = str('001001100111101')  # С ошибкой
     unzip(code)
 
