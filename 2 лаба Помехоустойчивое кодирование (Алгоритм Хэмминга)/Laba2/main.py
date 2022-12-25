@@ -34,7 +34,7 @@ def zip(inp):
     print(f'Выходная последовательность: {output}')
     return output
 
-def unzip(inp :str):
+def unzip(inp):
     print(f'---Декодер---')
     print(f'Входная последовательность: {inp}')
     powers = []
@@ -67,9 +67,6 @@ def unzip(inp :str):
         print(f'Индекс бита с ошибкой: {sum(errors)}')
         output = inp[:index] + str(0) + inp[index + 1:] if inp[index] == '1' else inp[:index + 1] + str(1) + inp[index:]
         print(f'Исправленная последовательность: {output}')
-
-
-
 
 if __name__ == '__main__':
     inp = str('10110111001')
