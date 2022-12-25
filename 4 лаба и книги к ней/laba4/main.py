@@ -35,10 +35,12 @@ def main():
     else:
         return
     '''
-    a = int(0)
+    a = int(37)
     while (calculateLegendre(a, p) != 1):
-        a = random.randint(10, p)
-    print(f'Число b подобрано правильно')
+        print(f'Число a подобрано неправильно')
+        a = a
+        #a = random.randint(1, p)
+    print(f'Число a подобрано правильно')
     print(f'a = {a}')
 
     b = int(0)
@@ -51,15 +53,14 @@ def main():
     K = []
     k = int(-1)
     while k != 0:
+        a = A[len(A) - 1]
         k = 0
-        #ipow2 = 1
         #while a**((2**k)*q) % p != 1:
         #while (a ** ((ipow2) * q)) % p != 1:
-        while pow(a,(2**k * q), p) != 1:
         #while (a % p)** (ipow2 * q) != 1:
+        while pow(a,2**k * q, p) != 1:
             print(k)
             k += 1
-            #ipow2 *= 2
         K.append(k)
         if k != 0:
             a = A[len(A) - 1] * b**(2**(m-k)) % p
