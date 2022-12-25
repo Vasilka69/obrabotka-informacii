@@ -65,14 +65,16 @@ def main():
         #while a**((2**k)*q) % p != 1:
         #while (a ** ((ipow2) * q)) % p != 1:
         #while (a % p)** (ipow2 * q) != 1:
-        res = pow(a,2**k * q, p) # a^(b mod c - 1) mod c
-        res = a ** (2**k * q % (p - 1)) % p
+        #res = pow(a,2**k * q, p) # a^(b mod c - 1) mod c
+        #res = a ** (2**k * q % (p - 1)) % p
+        res = int()
         while res != 1:
             #print(k)
-            k += 1
             #res = pow(a,2**k * q, p)
-            res = a ** ( 2**k * q % (p - 1)) % p
+            #res = a ** ( 2**k * q % (p - 1)) % p
+            res = a**((2**k)*q) % p
             print(res)
+            k += 1
         K.append(k)
         if k != 0:
             a = A[len(A) - 1] * b**(2**(m-k)) % p
