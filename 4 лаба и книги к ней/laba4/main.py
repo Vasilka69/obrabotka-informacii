@@ -1,17 +1,25 @@
 import math as mat
+import random
+
 
 def A(n: int, m, k, a):
     print()
 
+
+def calculateLegendre(a, p):
+    a1 = a % p
+    if a1 == 0:
+        return 0
+    else:
+        for i in range(1, p-1):
+            if i**2 % p == a1:
+                return 1
+        return -1
+
 def main():
-    a = int(9)  # Число, корень которого нужно найти
-    print(f'a = {a}')
-    m = 1
-    q = 3  # Нечетное
+    m = 2
+    q = 5  # Нечетное
     pminus = (2 ** m) * q  # Четное
-    while pminus <= a:
-        m += 1
-        pminus = (2 ** m) * q
     p = pminus + 1 # 7 Нечетное простое
     print(f'p = {p}, m = {m}, q = {q}')
 
@@ -19,36 +27,43 @@ def main():
     for i in range(p):
         Zp.append(i)
     print(f'Zp = {Zp}')
-    b = (int(mat.sqrt(p)) + 1) ** 2
-    print(f'b = {b}')
+    '''
+    a = int(9)  # Число, корень которого нужно найти
+    print(f'a = {a}')
+    if (calculateLegendre(a, p) == 1):
+        print(f'Число a подобрано правильно')
+    else:
+        return
+    '''
+    a = int(0)
+    while (calculateLegendre(a, p) != 1):
+        a = random.randint(10, p)
+    print(f'Число b подобрано правильно')
+    print(f'a = {a}')
 
-    # a = 4
-    # k = 0
-    # m = 1
-    # q = 3
-    # pminus = 6
-    # p = 7
+    b = int(0)
+    while (calculateLegendre(b, p) != -1):
+        b = random.randint(0, p)
+    print(f'Число b подобрано правильно')
+    print(f'b = {b}')
 
     A = [a]
     K = []
-    # ipow2 = 2
-    # i = int(0)
     k = int(-1)
-    print(a**((2**k)*q) % p)
     while k != 0:
         k = 0
-        ipow2 = 1
+        #ipow2 = 1
         #while a**((2**k)*q) % p != 1:
-        while (a ** ((ipow2) * q)) % p != 1:
+        #while (a ** ((ipow2) * q)) % p != 1:
+        while pow(a,(2**k * q), p) != 1:
+        #while (a % p)** (ipow2 * q) != 1:
             print(k)
-            # print(f'prepreres = {((ipow2) * q)}')
-            # print(f'preres = {(a ** ((ipow2) * q))}')
-            # print(f'res = {(a ** ((ipow2) * q)) % p}')
             k += 1
-            ipow2 *= 2
+            #ipow2 *= 2
         K.append(k)
         if k != 0:
             a = A[len(A) - 1] * b**(2**(m-k)) % p
+        A.append(a)
         print(f'k = {k}')
     #print(K)
     R = []
