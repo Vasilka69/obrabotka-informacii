@@ -5,6 +5,10 @@ import random
 def A(n: int, m, k, a):
     print()
 
+def gcd(a, b):
+    while b:
+        a, b = b, a%b
+    return a
 
 def calculateLegendre(a, p):
     a1 = a % p
@@ -19,8 +23,8 @@ def calculateLegendre(a, p):
 def main():
     m = 2
     q = 5  # Нечетное
-    pminus = (2 ** m) * q  # Четное
-    p = pminus + 1 # 7 Нечетное простое
+    pminus = (2 ** m) * q  # 20 Четное
+    p = pminus + 1 # 21 7 Нечетное простое
     print(f'p = {p}, m = {m}, q = {q}')
 
     Zp = []
@@ -35,16 +39,19 @@ def main():
     else:
         return
     '''
-    a = int(37)
-    while (calculateLegendre(a, p) != 1):
+    # a = int(0)
+    a = int(16)
+    while (calculateLegendre(a, p) != 1 and gcd(a, p) != 1):
         print(f'Число a подобрано неправильно')
         a = a
         #a = random.randint(1, p)
     print(f'Число a подобрано правильно')
     print(f'a = {a}')
 
-    b = int(0)
+    #b = int(0)
+    b = 12
     while (calculateLegendre(b, p) != -1):
+        return
         b = random.randint(0, p)
     print(f'Число b подобрано правильно')
     print(f'b = {b}')
@@ -58,9 +65,14 @@ def main():
         #while a**((2**k)*q) % p != 1:
         #while (a ** ((ipow2) * q)) % p != 1:
         #while (a % p)** (ipow2 * q) != 1:
-        while pow(a,2**k * q, p) != 1:
-            print(k)
+        res = pow(a,2**k * q, p) # a^(b mod c - 1) mod c
+        res = a ** (2**k * q % (p - 1)) % p
+        while res != 1:
+            #print(k)
             k += 1
+            #res = pow(a,2**k * q, p)
+            res = a ** ( 2**k * q % (p - 1)) % p
+            print(res)
         K.append(k)
         if k != 0:
             a = A[len(A) - 1] * b**(2**(m-k)) % p
