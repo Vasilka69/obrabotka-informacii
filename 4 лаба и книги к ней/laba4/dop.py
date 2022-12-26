@@ -5,16 +5,19 @@ import random
 def A(n: int, m, k, a):
     print()
 
+
 def gcd(a, b):
     while b:
-        a, b = b, a%b
+        a, b = b, a % b
     return a
+
 
 def IsPrime(n):
     d = 2
     while n % d != 0:
         d += 1
     return d == n
+
 
 def getAllPrimes(n):
     N = []
@@ -23,7 +26,8 @@ def getAllPrimes(n):
             N.append(i)
     return N
 
-def MillerRabinTest(num, k = 40):
+
+def MillerRabinTest(num, k=40):
     if num == 2:
         return True
     if num % 2 == 0:
@@ -48,37 +52,29 @@ def MillerRabinTest(num, k = 40):
                 break
     return True
 
-def miller_rabin(n, k):
 
-    # Implementation uses the Miller-Rabin Primality Test
-    # The optimal number of rounds for this test is 40
-    # See http://stackoverflow.com/questions/6325576/how-many-iterations-of-rabin-miller-should-i-use-for-cryptographic-safe-primes
-    # for justification
+def getAllDividers(n):
+    res = []
+    for i in range(n, 1, -1):
+        if (n % i == 0):
+            res.append(i)
+    return res
 
-    # If number is even, it's a composite number
 
-    if n == 2:
+def is_prime(N): # Методом пробных делений
+    sqr = mat.ceil(mat.sqrt(N))
+    if N == 0 or N == 1:
+        return
+    elif N <= 2:
+        #print(f'Число {N} является простым')
         return True
-
-    if n % 2 == 0:
-        return False
-
-    r, s = 0, n - 1
-    while s % 2 == 0:
-        r += 1
-        s //= 2
-    for _ in range(k):
-        a = random.randrange(2, n - 1)
-        x = pow(a, s, n)
-        if x == 1 or x == n - 1:
-            continue
-        for _ in range(r - 1):
-            x = pow(x, 2, n)
-            if x == n - 1:
-                break
-        else:
+    for i in range(2, sqr + 1):
+        if N % i == 0:
+            #print(f'Число {N} не является простым')
             return False
+    #print(f'Число {N} является простым')
     return True
+
 
 def main():
     n = int(5)
@@ -94,9 +90,9 @@ def main():
         t = random.randint(1, max - min)
     print(f'x = {x}')
     print(f't = {t}')
-    print(f'x+t = {x+t}')
+    print(f'x+t = {x + t}')
     # Шаг 2
-    Otrezok = list(range(x, x+t+1)) # Правильная ли длина
+    Otrezok = list(range(x, x + t + 1))  # Вроде правильная длина
     primes = getAllPrimes(B)
     print(primes)
     for num in Otrezok:
@@ -108,11 +104,14 @@ def main():
     # Шаг 3
     print('Шаг 3')
     for num in Otrezok:
-        if (not MillerRabinTest(num, k = 100)):
+        if (not MillerRabinTest(num, k=100)):
             Otrezok.remove(num)
             print(f'2 Удалено) {num}')
     # Шаг 4
-
+    for num in Otrezok:
+        if (is_prime(num)):
+            print(f'Простое число найдено: {num}')
+            break
 
 
 if __name__ == '__main__':
