@@ -1,3 +1,4 @@
+import math
 import math as mat
 import random
 
@@ -77,7 +78,7 @@ def is_prime(N): # Методом пробных делений
 
 
 def main():
-    n = int(5)
+    n = int(3)
     B = 5
     # Шаг 1
     min = 10 ** (n - 1)
@@ -85,7 +86,10 @@ def main():
     print(f'min = {min}')
     print(f'max = {max}')
     x = random.randint(min, max - 1)
-    t = random.randint(1, max - min)
+    #t = random.randint(1, max - min)
+    #t = random.randint(1, int((max - min) * 0.001))
+    #t = random.randint(1, int((max - min) * 0.1 ** (n-3)))
+    t = random.randint(1, math.ceil(mat.sqrt(max - min)))
     while x + t > max:
         t = random.randint(1, max - min)
     print(f'x = {x}')
@@ -94,7 +98,7 @@ def main():
     # Шаг 2
     Otrezok = list(range(x, x + t + 1))  # Вроде правильная длина
     primes = getAllPrimes(B)
-    print(primes)
+    print(f'Простые числа <= B{primes}')
     for num in Otrezok:
         for prime in primes:
             if (num % prime == 0):
@@ -111,7 +115,7 @@ def main():
     for num in Otrezok:
         if (is_prime(num)):
             print(f'Простое число найдено: {num}')
-            break
+            #break
 
 
 if __name__ == '__main__':
