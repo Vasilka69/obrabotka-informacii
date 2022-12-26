@@ -26,6 +26,8 @@ def calculateLegendre(a, p):
                 return 1
         return -1
 
+
+
 def main():
     m = 2
     q = 5  # Нечетное
@@ -104,7 +106,7 @@ def main():
         rn = ri
     x0 = R[len(R) - 1]
     print(f'Корень из a = {x0}')
-    print(f'Полученное сравнение: {(x0**2) % p}')
+    print(f'Сравнение: {(x0**2) % p}')
     print(f'Правильное сравнение: {(a) % p}')
     '''
     while k != 0:

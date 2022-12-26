@@ -10,12 +10,6 @@ def gcd(a, b):
         a, b = b, a%b
     return a
 
-def IsPrime(n):
-    d = 2
-    while n % d != 0:
-        d += 1
-    return d == n
-
 def calculateLegendre(a, p):
     a1 = a % p
     if a1 == 0:
@@ -30,9 +24,6 @@ def main():
     m = 2
     q = 5  # Нечетное
     pminus = (2 ** m) * q  # 20 Четное
-    while (not IsPrime(pminus + 1)):
-        q += 2
-        pminus = (2 ** m) * q
     p = pminus + 1 # 21 7 Нечетное простое
     print(f'p = {p}, m = {m}, q = {q}')
 
@@ -49,7 +40,7 @@ def main():
         return
     '''
     # a = int(0)
-    a = int(269)
+    a = int(16)
     while (calculateLegendre(a, p) != 1 and gcd(a, p) != 1):
         print(f'Число a подобрано неправильно')
         a = a
@@ -74,25 +65,21 @@ def main():
         #while a**((2**k)*q) % p != 1:
         #while (a ** ((ipow2) * q)) % p != 1:
         #while (a % p)** (ipow2 * q) != 1:
-        res = pow(int(a),int(2**k * q), int(p)) # a^(b mod c - 1) mod c
-        # print(pow(a,2**k * q))
-        # print(pow(a,2**k * q, p))
-        # print((25*25) % 29 )
+        #res = pow(a,2**k * q, p) # a^(b mod c - 1) mod c
         #res = a ** (2**k * q % (p - 1)) % p
-        #res = int()
+        res = int()
         while res != 1:
             #print(k)
             #res = pow(a,2**k * q, p)
             #res = a ** ( 2**k * q % (p - 1)) % p
-            #res = a**((2**k)*q) % p
-            res = pow(int(a),int(2**k * q), int(p))
-            # print(res)
+            res = a**((2**k)*q) % p
+            print(res)
             k += 1
         K.append(k)
         if k != 0:
-            a = int(A[len(A) - 1] * b**(2**(m-k))) % p
+            a = A[len(A) - 1] * b**(2**(m-k)) % p
         A.append(a)
-        # print(f'k = {k}')
+        print(f'k = {k}')
     #print(K)
     R = []
     rn = A[len(A) - 1] ** ((q + 1) / 2) % p
@@ -104,8 +91,6 @@ def main():
         rn = ri
     x0 = R[len(R) - 1]
     print(f'Корень из a = {x0}')
-    print(f'Полученное сравнение: {(x0**2) % p}')
-    print(f'Правильное сравнение: {(a) % p}')
     '''
     while k != 0:
         print(i)
