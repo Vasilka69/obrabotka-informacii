@@ -18,12 +18,12 @@ def main():
     class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat', 'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
     index = 0
-
+    '''
     plt.figure()
     plt.imshow(x_train[index]) # 0 - 59999
     plt.colorbar()
     plt.grid(False)
-
+    '''
     # Нормализуем
     x_train = x_train / 255
     x_test = x_test / 255
@@ -40,7 +40,7 @@ def main():
     '''
     # Нейросеть
     path_to_load = 'savedmodel/'
-    '''
+
     model = keras.Sequential([
         keras.layers.Flatten(input_shape=(28, 28)),
         keras.layers.Dense(128, activation="relu"),
@@ -53,14 +53,15 @@ def main():
     # Обучение
     model.fit(x_train, y_train, epochs=10)
     model.save(path_to_load)
-    '''
+
     # Проверка точности предсказаний
-    '''
+
     test_loss, test_acc = model.evaluate(x_test, y_test)
     print('Test accuracy: ', test_acc)
-    '''
+
     # Загрузка модели
-    model = keras.models.load_model(path_to_load)
+    #model = keras.models.load_model(path_to_load)
+
     # Предсказание
     predictions = model.predict(x_train)
     dictinary = dict(zip(class_names, predictions[index]))
