@@ -8,10 +8,13 @@ from keras.datasets import fashion_mnist
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
 from keras import utils
+import tensorflow as tf
+import tensorflow_datasets as tfds
 
 
 def main():
-    (x_train, y_train), (x_test, y_test) = fashion_mnist.load_data()
+    dataset = tfds.load('open_images/v7', split='train')
+    # (x_train, y_train), (x_test, y_test) = fashion_mnist.load_data()
     class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat', 'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
     index = 0
