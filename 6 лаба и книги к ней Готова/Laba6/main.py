@@ -25,9 +25,20 @@ def SAlg():
     return False
 
 
+def DopSort():
+    inp = [5, 4, 3, 2]
+    temp = []
+    for i in range(0, len(inp), 2):
+        if inp[i] > inp[i+1]:
+            temp.append([inp[i+1], inp[i]])
+        else:
+            temp.append([inp[i], inp[i+1]])
+    print(temp)
+
 def main():
     #RAlg()
-    SAlg()
+    #SAlg()
+    DopSort()
 
 if __name__ == '__main__':
     main()
