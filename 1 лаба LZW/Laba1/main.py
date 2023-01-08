@@ -20,29 +20,24 @@ def encoder(text):
     print(f'Исходный текст: {text}')
     n = len(text)
     print(f'Длина текста: {n}')
-    c = 1
-    N = 0
-    dictionary = ['']
+
     table = [0] * 5
 
     table[0] = list(['Шаг', 0])
     table[1] = list(['Словарь', ''])
-    table[2] = list(['Номер слова'])
-    table[3] = list(['Кодовые символы'])
-    table[4] = list(['Затраты (бит)'])
-    '''
-    table[0][0] = 3
-    table[0].append(1)
-    printm2d(table)
-    print(table)
-    '''
+    table[2] = list(['Номер слова', '-'])
+    table[3] = list(['Кодовые символы', '-'])
+    table[4] = list(['Затраты (бит)', '-'])
 
+    c = 1
+    N = 0
+    dictionary = ['']
     while N < n:
         #print(f'N = {N}')
         table[0].append(c)
         temp = text[N]
         l = 1
-        while dictionary.__contains__(temp):
+        while dictionary.__contains__(temp): # Переписать через фор
             if N + l < n:
                 temp += text[N+l]
                 l += 1
