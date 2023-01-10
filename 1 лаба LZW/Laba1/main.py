@@ -34,6 +34,8 @@ def encoder(text):
     esc = '#'
     dictionary = [esc]
 
+    lettercost = 8
+
     table = list([0] * 5)
 
     table[0] = list(['Шаг', 0])
@@ -75,8 +77,6 @@ def encoder(text):
             if num != 0:
                 count -= len(str(bin(num))[2:])
             table[3].append('0' * count)
-        if N == 2:
-            print(str(bin(num))[2:])
         if wordfound:
             table[3][len(table[3]) - 1] += str(bin(num))[2:]
         else:
@@ -88,10 +88,15 @@ def encoder(text):
         dictionary.append(newword)
         table[1].append(newword)
         table[2].append(num)
-        '''
-        table[3].append(temp)
-        table[4].append(temp)
-        '''
+
+        if N == 0:
+            table[4].append(f'0 + {lettercost} = {0 + lettercost}')
+        else:
+            if wordfound:
+                table[4].append(f'{len(table[3][len(table[3]) - 1])}')
+            else:
+                table[4].append(f'log({c-1}) + {lettercost} = {m.ceil(m.log2(c-1)) + lettercost}')
+
         if l != 1:
             l -= 1
         N += l
