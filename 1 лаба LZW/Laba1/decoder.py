@@ -1,11 +1,10 @@
-from sys import argv
 from struct import *
 
 # taking the compressed file input and the number of bits from command line
 # defining the maximum table size
 # opening the compressed file
 # defining variables
-input_file, n = argv[1:]
+input_file, n = 'example.lzw', 12
 maximum_table_size = pow(2, int(n))
 file = open(input_file, "rb")
 compressed_data = []

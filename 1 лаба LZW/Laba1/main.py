@@ -1,4 +1,5 @@
 import math as m
+from struct import *
 
 def printm(mas):
     print('---')
@@ -26,7 +27,7 @@ def printm2d(mas):
     print('---')
 
 
-def encoder(text):
+def LZW_table(text):
     print(f'Исходный текст: {text}')
     n = len(text)
     print(f'Длина текста: {n}')
@@ -50,7 +51,6 @@ def encoder(text):
         #print(f'N = {N}')
         table[0].append(c)
         temp = text[N]
-        #temp = ''
         l = 1
         while dictionary.__contains__(esc + temp) or dictionary.__contains__(temp):
             if N + l < n:
@@ -100,18 +100,28 @@ def encoder(text):
         if l != 1:
             l -= 1
         N += l
-        #N += 1
         c += 1
 
     printm2d(table)
     #printm(dictionary)
 
+FILE_PATH = 'example.txt'
 
+def encode():
+    file = open(FILE_PATH)
+    inp = file.read()
+    dictionary = {}
+    for letter in inp:
+        dictionary[letter] = ord(letter)
+    string = ''
+    output = []
+    file.close()
 
 def main():
     text = 'IF_WE_CANNOT_DO_AS_WE_WOULD_WE_SHOULD_DO_AS_WE_CAN'
     text = 'WHO_CHATTERS_TO_YOU_WILL_CHATTER_ABOUT_YOU'
-    encoder(text)
+    #LZW_table(text)
+    encode()
 
 
 if __name__ == '__main__':

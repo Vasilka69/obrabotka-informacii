@@ -1,11 +1,10 @@
-from sys import argv
 from struct import *
 
 # taking the input file and the number of bits from command line
 # defining the maximum table size
 # opening the input file
 # reading the input file and storing the file data into data variable
-input_file, n = argv[1:]
+input_file, n = 'example.txt', 12
 maximum_table_size = pow(2, int(n))
 file = open(input_file)
 data = file.read()
