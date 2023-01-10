@@ -73,7 +73,7 @@ def encoder(text):
         else:
             count = m.ceil(m.log2(c - 1))
             if num != 0:
-                count -= len(str(bin(c))[2:])
+                count -= len(str(bin(num))[2:])
             table[3].append('0' * count)
         if N == 2:
             print(str(bin(num))[2:])
