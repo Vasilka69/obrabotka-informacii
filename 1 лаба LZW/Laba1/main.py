@@ -95,7 +95,8 @@ def encoder(text):
                 table[4].append(f'{len(table[3][len(table[3]) - 1])}')
             else:
                 table[4].append(f'log({c-1}) + {lettercost} = {m.ceil(m.log2(c-1)) + lettercost}')
-
+        if N + l == n:
+            break
         if l != 1:
             l -= 1
         N += l
@@ -109,6 +110,7 @@ def encoder(text):
 
 def main():
     text = 'IF_WE_CANNOT_DO_AS_WE_WOULD_WE_SHOULD_DO_AS_WE_CAN'
+    text = 'WHO_CHATTERS_TO_YOU_WILL_CHATTER_ABOUT_YOU'
     encoder(text)
 
 
