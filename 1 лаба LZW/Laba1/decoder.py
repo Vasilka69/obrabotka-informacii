@@ -4,7 +4,7 @@ from struct import *
 # defining the maximum table size
 # opening the compressed file
 # defining variables
-input_file, n = 'example.lzw', 12
+input_file, n = 'example_ENCODED.txt', 12
 maximum_table_size = pow(2, int(n))
 file = open(input_file, "rb")
 compressed_data = []

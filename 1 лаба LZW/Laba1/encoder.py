@@ -14,7 +14,7 @@ dictionary_size = 256
 dictionary = {chr(i): i for i in range(dictionary_size)}
 string = ""  # String is null.
 compressed_data = []  # variable to store the compressed data.
-
+print(dictionary)
 # iterating through the input symbols.
 # LZW Compression algorithm
 for symbol in data:
@@ -27,9 +27,18 @@ for symbol in data:
             dictionary[string_plus_symbol] = dictionary_size
             dictionary_size += 1
         string = symbol
-
+print(dictionary)
+print('dictionary')
+print(compressed_data)
+for string in compressed_data:
+    print(chr(string), end='\t')
+print()
+for data in compressed_data:
+    print(int(data), end='\t')
 if string in dictionary:
     compressed_data.append(dictionary[string])
+print()
+print(compressed_data)
 
 # storing the compressed string into a file (byte-wise).
 out = input_file.split(".")[0]
