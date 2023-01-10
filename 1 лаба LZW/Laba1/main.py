@@ -1,3 +1,5 @@
+import math as m
+
 def printm(mas):
     print('---')
     for i in mas:
@@ -17,7 +19,7 @@ def printm2d(mas):
                         print('', end='\t')
                 if i != 0  and j > 3 and len(str(mas[j][i])) >= 4:
                         print('', end='\t')
-                
+
                 print(mas[j][i], end='\t\t')
             except:
                 print(' ', end='')
@@ -29,34 +31,64 @@ def encoder(text):
     print(f'Исходный текст: {text}')
     n = len(text)
     print(f'Длина текста: {n}')
+    esc = '#'
+    dictionary = [esc]
 
-    table = [0] * 5
+    table = list([0] * 5)
 
     table[0] = list(['Шаг', 0])
-    table[1] = list(['Словарь', ''])
+    table[1] = list(['Словарь', esc])
     table[2] = list(['Номер слова', '-'])
     table[3] = list(['Кодовые символы', '-'])
     table[4] = list(['Затраты (бит)', '-'])
 
     c = 1
     N = 0
-    dictionary = ['']
+
     while N < n:
         #print(f'N = {N}')
         table[0].append(c)
         temp = text[N]
         #temp = ''
         l = 1
-        while dictionary.__contains__(temp): # Переписать через фор
+        while dictionary.__contains__(esc + temp) or dictionary.__contains__(temp):
             if N + l < n:
                 temp += text[N+l]
                 l += 1
             else:
                 break
-        dictionary.append(temp)
-        table[1].append(temp)
+        find = ''
+        if len(temp) == 1:
+            find = temp
+        else:
+            find = temp[:-1]
+        num = 0
+        wordfound = False
+        for j in range(len(dictionary) - 1):
+            if dictionary[j] == esc + find or dictionary[j] == find:
+                num = j
+                wordfound = True
+        if N == 0:
+            table[3].append('')
+        else:
+            count = m.ceil(m.log2(c - 1))
+            if num != 0:
+                count -= len(str(bin(c))[2:])
+            table[3].append('0' * count)
+        if N == 2:
+            print(str(bin(num))[2:])
+        if wordfound:
+            table[3][len(table[3]) - 1] += str(bin(num))[2:]
+        else:
+            table[3][len(table[3]) - 1] += f'bin({text[N+l-1]})'
+        if not wordfound:
+            newword = esc + temp
+        else:
+            newword = temp
+        dictionary.append(newword)
+        table[1].append(newword)
+        table[2].append(num)
         '''
-        table[2].append(temp)
         table[3].append(temp)
         table[4].append(temp)
         '''
@@ -65,6 +97,7 @@ def encoder(text):
         N += l
         #N += 1
         c += 1
+
     printm2d(table)
     #printm(dictionary)
 
