@@ -102,8 +102,8 @@ def LZW_table(text):
         N += l
         c += 1
 
-    #printm2d(table)
-    printm(dictionary)
+    printm2d(table)
+    #printm(dictionary)
 
 FILE_PATH = 'example.txt'
 
@@ -269,7 +269,10 @@ def encode2():
     code = table[3][2:]
     print(code)
     for i in code:
-        print(chr(int(i)), end='')
+        print(chr(int(i)), end='\t')
+    print()
+    for i in code:
+        print(i, end='\t')
     print()
     out = FILE_PATH.split(".")[0]
     '''
@@ -301,21 +304,26 @@ def decode():
 
     out = ''
     for i in range(len(temp)):
-        check = False
-        for j in range(i):
-            if j == temp[i]:
-                out += chr(temp[j])
-                check = True
-        if not check:
-            out += chr(temp[i])
+        out += refFinder(temp, i)
+
     print(out)
 
-
+def refFinder(temp, i):
+    out = ''
+    check = False
+    for j in range(i):
+        if j == temp[i]:
+            out += refFinder(temp, j)
+            check = True
+            break
+    if not check:
+        out += chr(temp[i])
+    return out
 
 def main():
     text = 'IF_WE_CANNOT_DO_AS_WE_WOULD_WE_SHOULD_DO_AS_WE_CAN'
-    text = 'WHO_CHATTERS_TO_YOU_WILL_CHATTER_ABOUT_YOU'
-    #LZW_table(text)
+    #text = 'WHO_CHATTERS_TO_YOU_WILL_CHATTER_ABOUT_YOU'
+    LZW_table(text)
     #encode()
     encode2()
     decode()
