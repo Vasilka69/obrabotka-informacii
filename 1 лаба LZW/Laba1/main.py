@@ -65,7 +65,7 @@ def LZW_table(text):
             find = temp[:-1]
         num = 0
         wordfound = False
-        for j in range(len(dictionary) - 1):
+        for j in range(len(dictionary)):
             if dictionary[j] == esc + find or dictionary[j] == find:
                 num = j
                 wordfound = True
