@@ -8,10 +8,19 @@ def printm2d(mas):
     print('---')
     for i in range(len(mas[0])):
         for j in range(len(mas)):
+            if i != 0 and len(str(mas[j][i])) < 4:
+                for _ in range(j-1):
+                    print('', end='\t')
+
+            if i != 0  and j > 2 and len(str(mas[j][i])) >= 4:
+                    print('', end='\t')
+            if i != 0  and j > 3 and len(str(mas[j][i])) >= 4:
+                    print('', end='\t')
+
             try:
                 print(mas[j][i], end='\t\t')
             except:
-                print(' ', end='\t\t')
+                print(' ', end='')
         print()
     print('---')
 
@@ -45,6 +54,9 @@ def encoder(text):
                 break
         dictionary.append(temp)
         table[1].append(temp)
+        table[2].append(temp)
+        table[3].append(temp)
+        table[4].append(temp)
         #l = len(temp)
         if l != 1:
             l -= 1
