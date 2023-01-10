@@ -300,7 +300,16 @@ def decode():
     print(temp)
 
     out = ''
-    for i in temp:
+    for i in range(len(temp)):
+        check = False
+        for j in range(i):
+            if j == temp[i]:
+                out += chr(temp[j])
+                check = True
+        if not check:
+            out += chr(temp[i])
+    print(out)
+
 
 
 def main():
