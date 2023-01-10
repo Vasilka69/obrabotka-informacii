@@ -14,11 +14,10 @@ def printm2d(mas):
                 if i != 0 and len(str(mas[j][i])) < 4:
                     for _ in range(j-1):
                         print('', end='\t')
-
-                if i != 0  and j > 2 and len(str(mas[j][i])) >= 4:
-                        print('', end='\t')
-                if i != 0  and j > 3 and len(str(mas[j][i])) >= 4:
-                        print('', end='\t')
+                if i != 0 and j > 2 and len(str(mas[j][i])) >= 4:
+                    print('', end='\t')
+                if i != 0 and j > 3 and len(str(mas[j][i])) >= 4:
+                    print('', end='\t')
 
                 print(mas[j][i], end='\t\t')
             except:
