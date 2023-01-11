@@ -46,7 +46,7 @@ def LZW_table(text):
 
     c = 1
     N = 0
-
+    newword = ''
     while N < n:
         #print(f'N = {N}')
         table[0].append(c)
@@ -95,15 +95,23 @@ def LZW_table(text):
                 table[4].append(f'{len(table[3][len(table[3]) - 1])}')
             else:
                 table[4].append(f'log({c-1}) + {lettercost} = {m.ceil(m.log2(c-1)) + lettercost}')
+        '''
         if N + l == n:
             break
+        '''
         if l != 1:
             l -= 1
         N += l
         c += 1
 
     printm2d(table)
-    printm(dictionary)
+    '''
+    summa = 0
+    for i in table[4][2:]:
+        summa += int(i.split(' ')[len(i.split(' ')) - 1])
+    print(summa)
+    '''
+    #printm(dictionary)
 
 FILE_PATH = 'example.txt'
 
