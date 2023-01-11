@@ -264,8 +264,10 @@ def encode2():
                 table[4].append(f'{len(table[3][len(table[3]) - 1])}')
             else:
                 table[4].append(f'log({c-1}) + {lettercost} = {m.ceil(m.log2(c-1)) + lettercost}')
+        '''
         if N + l == n:
             break
+        '''
         if l != 1:
             l -= 1
         N += l
@@ -312,7 +314,8 @@ def decode():
     for letter in text:
         temp.append(ord(letter))
     #########
-    temp = [73, 70, 95, 87, 69, 2, 67, 65, 78, 8, 79, 84, 2, 68, 10, 2, 7, 83, 2, 3, 4, 18, 10, 85, 76, 13, 18, 20, 17, 72, 22, 24, 25, 13, 14, 16, 26, 5, 7]
+    temp = [73, 70, 95, 87, 69, 2, 67, 65, 78, 8, 79, 84, 2, 68, 10, 2, 7, 83, 2, 3, 4, 18, 10, 85, 76, 13, 18, 20, 17, 72, 22,
+     24, 25, 13, 14, 16, 26, 5, 7, 8]
     print('-', end='')
     print(temp)
 
@@ -320,7 +323,22 @@ def decode():
     for i in range(len(temp)):
         out += refFinder(temp, i, '')
 
-    print(out)
+    print(f'\"{out}\"')
+    out2 = ''
+    for i in out:
+        out2 += str(ord(i)) + ' '
+    print(out2)
+
+    '''
+    out2 = ''
+    for i in out:
+        if ord(i) >= 41:
+            out2 += i
+        else:
+            out2 += out[ord(i) + 1]
+    print(out2)
+    '''
+
 
 def refFinder(temp, i, ch):
     out = ''
@@ -329,8 +347,24 @@ def refFinder(temp, i, ch):
         if j == int(temp[i]):
             out += refFinder(temp, j, chr(temp[j+1]))
             #print(f'1) {out}')
+
+            if ch == '':
+                print(j)
+            '''
             if ch != '':
-                ch = '*'
+                print(ord(ch))
+            '''
+            if ch != '':
+                print(len(temp))
+                if int(ord(ch)) < 41:
+                    #ch = temp[i]
+                    #ch = str(chr(temp[i]))
+                    #ch = str(chr(i))
+                    #ch = str(ord(ch))
+                    print(ord(ch))
+                    ch = str(chr(temp[ord(ch)]))
+                    #ch = '*'
+
             out += ch
             #print(f'2) {out}')
             check = True
@@ -342,10 +376,10 @@ def refFinder(temp, i, ch):
 def main():
     text = 'IF_WE_CANNOT_DO_AS_WE_WOULD_WE_SHOULD_DO_AS_WE_CAN'
     #text = 'WHO_CHATTERS_TO_YOU_WILL_CHATTER_ABOUT_YOU'
-    LZW_table(text)
+    #LZW_table(text)
     #encode()
-    #encode2()
-    #decode()
+    encode2()
+    decode()
 
 
 if __name__ == '__main__':
