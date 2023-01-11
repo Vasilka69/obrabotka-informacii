@@ -133,31 +133,29 @@ def getbits(file_path):
     #print(stream)
     return stream
 
-if __name__ == '__main__':
-    file_path = 'example.txt'
-
-    stream = getbits(file_path)
-    # Деление на блоки
+def divider(stream, count, side):
     blocks = []
-    '''
-    for block in range(math.ceil(len(stream) / 11)):
-        temp = ''
-        for i in range(11):
-            if block < len(stream):
-                temp += stream[block * 11 - 1 + i]
-            else:
-                temp += '0'
-        blocks.append(temp)
-    '''
     temp = ''
     for index in range(len(stream)):
-        if index % 11 != 0 or index == 0:
+        if index % count != 0 or index == 0:
             temp += stream[index]
         else:
             blocks.append(temp)
             temp = stream[index]
-    temp += '0' * (11 - len(temp))
+    if side == 'right':
+        temp += '0' * (count - len(temp))
+    else:
+        temp = '0' * (count - len(temp)) + temp
     blocks.append(temp)
+    return blocks
+
+
+if __name__ == '__main__':
+    file_path = 'example.txt'
+    stream = getbits(file_path)
+    print(f'Битовый поток:\n{stream}')
+    # Деление на блоки
+    blocks = divider(stream, 11, 'right')
     print(f'Блоки:\n{blocks}\n')
 
 
@@ -166,12 +164,18 @@ if __name__ == '__main__':
     file = open(file_path.split('.')[0] + '_DAMAGED.txt', 'w')
     file.write(text)
     file.close()
-    #file = open()
     '''
     # Сохранение файла в коде
+    encoded_blocks = []
     for block in blocks:
         inp = block
-        code = zip(inp)
+        encoded_blocks.append(zip(inp))
+    print(encoded_blocks)
+    '''
+    file = open(file_path.split('.')[0] + '_ENCODED.txt', 'w')
+    file.write(text)
+    file.close()
+    '''
     '''
     for block in blocks:
         #inp = str('10110111001')
