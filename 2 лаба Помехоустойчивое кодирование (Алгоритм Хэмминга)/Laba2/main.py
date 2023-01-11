@@ -1,3 +1,5 @@
+import random
+
 
 def zip(inp):
     print(f'---Кодер---')
@@ -60,20 +62,55 @@ def unzip(inp):
             errors.append(power)
     if len(errors) == 0:
         print('Ошибок не найдено')
+        '''
+        for power in powers:
+            power -= 1
+        output = ''
+        for i in range(len(inp)):
+            if not i in powers:
+                output += inp[i]
+        print(f'Выходная последовательность: {output}')
+        '''
+        print(f'Выходная последовательность: {inp}')
     else:
         print(f'Контрольные биты с ошибкой: {errors}')
         # Исправление
         index = sum(errors) - 1
         print(f'Индекс бита с ошибкой: {sum(errors)}')
-        output = inp[:index] + str(0) + inp[index + 1:] if inp[index] == '1' else inp[:index + 1] + str(1) + inp[index:]
+        #output = inp[:index] + str(0) + inp[index + 1:] if inp[index] == '1' else inp[:index + 1] + str(1) + inp[index:]
+        output = inp[:index] + str(0) + inp[index + 1:] if inp[index] == '1' else inp[:index] + str(1) + inp[index + 1:]
         print(f'Исправленная последовательность: {output}')
 
+
+def doerror(code: str):
+    index = random.randint(0, len(code))
+    output = ''
+    for i in range(len(code)):
+        if i == index:
+            if code[i] == '0':
+                output += '1'
+            else:
+                output += '0'
+        else:
+            output += code[i]
+    return output, index
+
 if __name__ == '__main__':
-    inp = str('10110111001')
+    file_path = 'example.txt'
+    file = open(file_path, 'rb')
+    inp = file.read()
+    file.close()
+
+    print(inp)
+    '''
+    #inp = str('10110111001')
+    #for
     code = zip(inp)
     print()
-    code = str('001001100111001')
-    #code = str('001001101111001') # С ошибкой
-    code = str('001001100111101')  # С ошибкой
+    code, i = doerror(code)  # С ошибкой
+    pr = '001001100111001'
+    print(f'Код с ошибкой в {i+1} бите: {pr}')
+    print(f'Код с ошибкой в {i+1} бите: {code}')
     unzip(code)
+    '''
 
