@@ -1,7 +1,4 @@
-import math
 import random
-import struct
-
 
 def zip(inp):
     print(f'---Кодер---')
@@ -35,7 +32,7 @@ def zip(inp):
             index += i * 2
         output = output[:i - 1] + str(counter % 2) + output[i:]
 
-    print(f'Выходная последовательность: {output}')
+    print(f'Выходная последовательность: {output}\n')
     return output
 
 def unzip(inp):
@@ -73,7 +70,8 @@ def unzip(inp):
                 output += inp[i]
         print(f'Выходная последовательность: {output}')
         '''
-        print(f'Выходная последовательность: {inp}')
+        print(f'Выходная последовательность: {inp}\n')
+        return inp
     else:
         print(f'Контрольные биты с ошибкой: {errors}')
         # Исправление
@@ -81,7 +79,8 @@ def unzip(inp):
         print(f'Индекс бита с ошибкой: {sum(errors)}')
         #output = inp[:index] + str(0) + inp[index + 1:] if inp[index] == '1' else inp[:index + 1] + str(1) + inp[index:]
         output = inp[:index] + str(0) + inp[index + 1:] if inp[index] == '1' else inp[:index] + str(1) + inp[index + 1:]
-        print(f'Исправленная последовательность: {output}')
+        print(f'Исправленная последовательность: {output}\n')
+        return output
 
 
 def doerror(code: str):
@@ -97,6 +96,7 @@ def doerror(code: str):
             output += code[i]
     return output, index
 
+
 def getbits(file_path):
     file = open(file_path, 'r')
     inp = file.read()
@@ -105,12 +105,6 @@ def getbits(file_path):
     code = ''.join(str(format(ord(byte), '08b') + ',') for byte in inp)[:-1]
     #print(code)
 
-    '''
-    code = ''
-    for letter in inp:
-        code += str("{0:b}".format(letter))
-    print(code)
-    '''
     bitsarr = code.split(',')
     #print(bitsarr)
 
@@ -150,21 +144,9 @@ def divider(stream, count, side):
     return blocks
 
 
-if __name__ == '__main__':
-    file_path = 'example.txt'
-    stream = getbits(file_path)
-    print(f'Битовый поток:\n{stream}')
-    # Деление на блоки
-    blocks = divider(stream, 11, 'right')
-    print(f'Блоки:\n{blocks}\n')
-
-    '''
-    file = open(file_path.split('.')[0] + '_DAMAGED.txt', 'w')
-    file.write(text)
-    file.close()
-    '''
+def zipfile():
+    print('---Сохранение файла в коде---')
     # Сохранение файла в коде
-    ZIPPED = []
     encoded_blocks = ''
     for block in blocks:
         inp = block
@@ -179,19 +161,24 @@ if __name__ == '__main__':
         text += chr(int(byte, 2))
     print(text)
 
-    file = open(file_path.split('.')[0] + '_ENCODED.txt', 'w', encoding='utf-8')
+    file = open(FILE_PATH.split('.')[0] + '_ENCODED.txt', 'w', encoding='utf-8')
     file.write(text)
     file.close()
+    print()
 
+def damagefile():
+    print('---Сохранение файла в коде с ошибками---')
     # Сохранение файла в коде с ошибками
-    DAMAGED = []
     damaged_blocks = ''
+    indexes = []
     for block in ZIPPED:
         inp = block
         damaged, index = doerror(block)
         damaged_blocks += damaged
+        indexes.append(index)
         DAMAGED.append(damaged)
-    print(encoded_blocks)
+    print(DAMAGED)
+    print(indexes)
     bytesarr = divider(damaged_blocks, 8, 'left')
     print(bytesarr)
     text = ''
@@ -199,21 +186,60 @@ if __name__ == '__main__':
         text += chr(int(byte, 2))
     print(text)
 
-    file = open(file_path.split('.')[0] + '_DAMAGED.txt', 'w', encoding='utf-8')
+    file = open(FILE_PATH.split('.')[0] + '_DAMAGED.txt', 'w', encoding='utf-8')
     file.write(text)
     file.close()
+    print()
+
+def unzipfile():
+    print('---Чтение, исправление и схранение файла---')
+    # Чтение, исправление и схранение файла
+    unzipped_blocks = ''
+    for block in DAMAGED:
+        inp = block
+        unzipped = unzip(block)
+        unzipped_blocks += unzipped
+        UNZIPPED.append(unzipped)
+    print(unzipped_blocks)
+    bytesarr = divider(unzipped_blocks, 8, 'left')
+    print(bytesarr)
+    text = ''
+    for byte in bytesarr:
+        text += chr(int(byte, 2))
+    print(text)
+
+    file = open(FILE_PATH.split('.')[0] + '_UNZIPPED.txt', 'w', encoding='utf-8')
+    file.write(text)
+    file.close()
+    print()
+
+FILE_PATH = 'example.txt'
+ZIPPED = []
+DAMAGED = []
+UNZIPPED = []
+
+if __name__ == '__main__':
+    stream = getbits(FILE_PATH)
+    print(f'Битовый поток:\n{stream}')
+    # Деление на блоки
+    blocks = divider(stream, 11, 'right')
+    print(f'Блоки:\n{blocks}\n')
+
+    zipfile()
+    damagefile()
+    unzipfile()
+
 
     '''
-    for block in blocks:
-        #inp = str('10110111001')
-        inp = block
-        code = zip(inp)
-        print()
-        code, i = doerror(code)  # С ошибкой
-        pr = '001001100111001'
-        print(f'Код с ошибкой в {i+1} бите: {pr}')
-        print(f'Код с ошибкой в {i+1} бите: {code}')
-        unzip(code)
+    #inp = str('10110111001')
+    inp = block
+    code = zip(inp)
+    print()
+    code, i = doerror(code)  # С ошибкой
+    pr = '001001100111001'
+    print(f'Код с ошибкой в {i+1} бите: {pr}')
+    print(f'Код с ошибкой в {i+1} бите: {code}')
+    unzip(code)
     '''
 
 
