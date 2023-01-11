@@ -314,8 +314,8 @@ def decode():
     for letter in text:
         temp.append(ord(letter))
     #########
-    temp = [73, 70, 95, 87, 69, 2, 67, 65, 78, 8, 79, 84, 2, 68, 10, 2, 7, 83, 2, 3, 4, 18, 10, 85, 76, 13, 18, 20, 17, 72, 22,
-     24, 25, 13, 14, 16, 26, 5, 7, 8]
+    #temp = [87, 72, 79, 95, 67, 1, 65, 84, 7, 69, 82, 83, 3, 7, 2, 3, 89, 2, 85, 3, 0, 73, 76, 22, 3, 4, 5, 7, 8, 10, 3, 6, 66, 17, 7, 15, 2, 18]
+
     print('-', end='')
     print(temp)
 
@@ -370,7 +370,10 @@ def refFinder(temp, i, ch):
             check = True
             break
     if not check:
-        out += chr(temp[i])
+        if int(temp[i]) < 41:
+            out += str(chr(temp[i]))
+        else:
+            out += chr(temp[i])
     return out
 
 def main():
