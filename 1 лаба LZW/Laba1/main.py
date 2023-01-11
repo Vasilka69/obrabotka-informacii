@@ -115,85 +115,8 @@ def LZW_table(text):
 
 FILE_PATH = 'example.txt'
 
+
 def encode():
-    file = open(FILE_PATH)
-    text = file.read()
-    esc = ''
-    dictionary = []
-
-    output = []
-    '''
-    dictionary = {}
-    for letter in text:
-        dictionary[letter] = ord(letter)
-    '''
-    n = len(text)
-    N = 0
-    while N < n:
-        temp = text[N]
-        l = 1
-        while dictionary.__contains__(esc + temp) or dictionary.__contains__(temp):
-            if N + l < n:
-                temp += text[N+l]
-                l += 1
-            else:
-                break
-
-        find = ''
-        if len(temp) == 1:
-            find = temp
-        else:
-            find = temp[:-1]
-
-        wordfound = False
-        for j in range(len(dictionary) - 1):
-            if dictionary[j] == esc + find or dictionary[j] == find:
-                wordfound = True
-
-        if not wordfound:
-            #output.append(dictionary[len(dictionary)])
-            newword = esc + temp
-        else:
-            newword = temp
-
-        dictionary.append(newword)
-        if N + l == n:
-            break
-        if l != 1:
-            l -= 1
-        N += l
-
-
-
-    print(dictionary)
-    out_dict = {}
-    for i in dictionary:
-        out_dict[i] = dictionary.index(i)
-        print(i)
-    print(out_dict)
-    string = ''
-    for symbol in text:
-        string_plus_symbol = string + symbol
-        if string_plus_symbol in dictionary:
-            string = string_plus_symbol
-        else:
-            out_dict.append(dictionary[dictionary.index(string)])
-            string = symbol
-
-    out_dict.append(string)
-    print(output)
-
-    out = FILE_PATH.split(".")[0]
-    output_file = open(out + '_ENCODED' + "." + FILE_PATH.split(".")[1], "wb")
-
-    for data in out_dict:
-        output_file.write(pack('>H', int(data)))
-
-    output_file.close()
-    file.close()
-
-def encode2():
-    print('---ENCODE---')
     file = open(FILE_PATH)
     text = file.read()
     file.close()
@@ -275,14 +198,15 @@ def encode2():
 
     printm2d(table)
     #printm(dictionary)
+    print('---ENCODE---')
+    print(f'Исходный текст: {text}')
+    n = len(text)
+    print(f'Длина текста: {n}')
 
     code = table[3][2:]
     print(code)
     for i in code:
         print(chr(int(i)), end='\t')
-    print()
-    for i in code:
-        print(i, end='\t')
     print()
     out = FILE_PATH.split(".")[0]
     '''
@@ -295,9 +219,6 @@ def encode2():
 
     for data in code:
         output_file.write(chr(int(data)))
-        print(int(data), end=' ')
-    print()
-    print(code)
     output_file.close()
 
 
@@ -307,7 +228,7 @@ def decode():
     filename = FILE_PATH.split('.')[0] + '_ENCODED' + '.txt'
     file = open(filename)
     text = str(file.read())
-    print(text)
+    #print(text)
     file.close()
 
     temp = []
@@ -315,20 +236,21 @@ def decode():
         temp.append(ord(letter))
     #########
     #temp = [87, 72, 79, 95, 67, 1, 65, 84, 7, 69, 82, 83, 3, 7, 2, 3, 89, 2, 85, 3, 0, 73, 76, 22, 3, 4, 5, 7, 8, 10, 3, 6, 66, 17, 7, 15, 2, 18]
-
+    '''
     print('-', end='')
     print(temp)
-
+    '''
     out = ''
     for i in range(len(temp)):
         out += refFinder(temp, i, '')
-
+    print(out)
+    '''
     print(f'\"{out}\"')
     out2 = ''
     for i in out:
         out2 += str(ord(i)) + ' '
     print(out2)
-
+    '''
     '''
     out2 = ''
     for i in out:
@@ -347,21 +269,22 @@ def refFinder(temp, i, ch):
         if j == int(temp[i]):
             out += refFinder(temp, j, chr(temp[j+1]))
             #print(f'1) {out}')
-
+            '''
             if ch == '':
                 print(j)
+            '''
             '''
             if ch != '':
                 print(ord(ch))
             '''
             if ch != '':
-                print(len(temp))
+                #print(len(temp))
                 if int(ord(ch)) < 41:
                     #ch = temp[i]
                     #ch = str(chr(temp[i]))
                     #ch = str(chr(i))
                     #ch = str(ord(ch))
-                    print(ord(ch))
+                    #print(ord(ch))
                     ch = str(chr(temp[ord(ch)]))
                     #ch = '*'
 
@@ -380,8 +303,7 @@ def main():
     text = 'IF_WE_CANNOT_DO_AS_WE_WOULD_WE_SHOULD_DO_AS_WE_CAN'
     #text = 'WHO_CHATTERS_TO_YOU_WILL_CHATTER_ABOUT_YOU'
     #LZW_table(text)
-    #encode()
-    encode2()
+    encode()
     decode()
 
 
