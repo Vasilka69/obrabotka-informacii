@@ -98,23 +98,35 @@ def doerror(code: str):
 
 if __name__ == '__main__':
     file_path = 'example.txt'
-    file = open(file_path, 'rb')
+    file = open(file_path, 'r')
     inp = file.read()
     file.close()
 
-    print("{0:b}".format(inp[1]))
+    code = ''.join(str(format(ord(byte), '08b') + ',') for byte in inp)[:-1]
+    print(code)
 
+    '''
     code = ''
     for letter in inp:
         code += str("{0:b}".format(letter))
     print(code)
+    '''
+    bitsarr = code.split(',')
+    print(bitsarr)
 
     bytesarr = []
-    for _ in range(len(code) / 8):
-        for i in range(8):
-            
-        bytesarr.append(temp)
-    file = open()
+    for byte in bitsarr:
+        bytesarr.append(int(byte, 2))
+    print(bytesarr)
+
+    text = ''
+    for char in bytesarr:
+        text += (chr(char))
+    print(text)
+
+    file = open(file_path.split('.')[0] + '_DAMAGED.txt', 'w')
+    file.write(text)
+    #file = open()
     '''
     #inp = str('10110111001')
     #for
