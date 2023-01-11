@@ -47,15 +47,23 @@ def unzip(inp):
 
     errors = []
     for power in powers:
-        #print(f'Power = {power}')
+        #print(f'Power = {power}', end=': ')
         ctrlBit = int(inp[power-1])
         summ = int(0)
-        bit = int(power - 1)
-        while bit <= (len(inp) - power):
-            for i in range(power):
+        bit = int(power)
+        #bits = []
+        first = 1
+        while bit < len(inp):
+            for i in range(power - first):
+                if bit == len(inp):
+                    break
                 summ += int(inp[bit])
+                #bits.append(bit+1)
                 bit += 1
+            first = 0
             bit += power
+        #print(bits)
+        #print(summ)
         summ %= 2
         if summ != ctrlBit:
             errors.append(power)
@@ -149,8 +157,7 @@ def zipfile():
     # Сохранение файла в коде
     encoded_blocks = ''
     for block in blocks:
-        inp = block
-        zipped = zip(inp)
+        zipped = zip(block)
         encoded_blocks += zipped
         ZIPPED.append(zipped)
     #print(encoded_blocks)
@@ -172,7 +179,6 @@ def damagefile():
     damaged_blocks = ''
     indexes = []
     for block in ZIPPED:
-        inp = block
         damaged, index = doerror(block)
         damaged_blocks += damaged
         indexes.append(index)
@@ -196,7 +202,6 @@ def unzipfile():
     # Чтение, исправление и схранение файла
     unzipped_blocks = ''
     for block in DAMAGED:
-        inp = block
         unzipped = unzip(block)
         unzipped_blocks += unzipped
         UNZIPPED.append(unzipped)
