@@ -31,7 +31,7 @@ def LZW_table(text):
     print(f'Исходный текст: {text}')
     n = len(text)
     print(f'Длина текста: {n}')
-    esc = '#'
+    esc = ''
     dictionary = [esc]
 
     lettercost = 8
@@ -103,7 +103,7 @@ def LZW_table(text):
         c += 1
 
     printm2d(table)
-    #printm(dictionary)
+    printm(dictionary)
 
 FILE_PATH = 'example.txt'
 
@@ -219,11 +219,11 @@ def encode2():
         table[0].append(c)
         temp = text[N]
         l = 1
-        while dictionary.__contains__(esc + temp) or dictionary.__contains__(temp):
+        while (dictionary.__contains__(esc + temp) or dictionary.__contains__(temp)) and N != n-1:
             if N + l < n:
                 temp += text[N+l]
                 l += 1
-            else:
+            elif N != n-1:
                 break
         find = ''
         if len(temp) == 1:
@@ -232,7 +232,7 @@ def encode2():
             find = temp[:-1]
         num = 0
         wordfound = False
-        for j in range(len(dictionary) - 1):
+        for j in range(len(dictionary)):
             if dictionary[j] == esc + find or dictionary[j] == find:
                 num = j
                 wordfound = True
@@ -285,6 +285,9 @@ def encode2():
 
     for data in code:
         output_file.write(chr(int(data)))
+        print(int(data), end=' ')
+    print()
+    print(code)
     output_file.close()
 
 
@@ -293,27 +296,35 @@ def decode():
 
     filename = FILE_PATH.split('.')[0] + '_ENCODED' + '.txt'
     file = open(filename)
-    text = file.read()
+    text = str(file.read())
     print(text)
     file.close()
 
     temp = []
     for letter in text:
         temp.append(ord(letter))
+    #########
+    temp = [73, 70, 95, 87, 69, 2, 67, 65, 78, 8, 79, 84, 2, 68, 10, 2, 7, 83, 2, 3, 4, 18, 10, 85, 76, 13, 18, 20, 17, 72, 22, 24, 25, 13, 14, 16, 26, 5, 7]
+    print('-', end='')
     print(temp)
 
     out = ''
     for i in range(len(temp)):
-        out += refFinder(temp, i)
+        out += refFinder(temp, i, '')
 
     print(out)
 
-def refFinder(temp, i):
+def refFinder(temp, i, ch):
     out = ''
     check = False
     for j in range(i):
-        if j == temp[i]:
-            out += refFinder(temp, j)
+        if j == int(temp[i]):
+            out += refFinder(temp, j, chr(temp[j+1]))
+            #print(f'1) {out}')
+            if ch != '':
+                ch = '*'
+            out += ch
+            #print(f'2) {out}')
             check = True
             break
     if not check:
@@ -325,8 +336,8 @@ def main():
     #text = 'WHO_CHATTERS_TO_YOU_WILL_CHATTER_ABOUT_YOU'
     LZW_table(text)
     #encode()
-    encode2()
-    decode()
+    #encode2()
+    #decode()
 
 
 if __name__ == '__main__':

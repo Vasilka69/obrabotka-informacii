@@ -4,6 +4,7 @@ from struct import *
 # defining the maximum table size
 # opening the compressed file
 # defining variables
+#input_file, n = 'example.lzw', 12
 input_file, n = 'example_ENCODED.txt', 12
 maximum_table_size = pow(2, int(n))
 file = open(input_file, "rb")
@@ -11,7 +12,7 @@ compressed_data = []
 next_code = 256
 decompressed_data = ""
 string = ""
-
+print(file.read())
 # Reading the compressed file.
 while True:
     rec = file.read(2)
@@ -23,7 +24,14 @@ while True:
 # Building and initializing the dictionary.
 dictionary_size = 256
 dictionary = dict([(x, chr(x)) for x in range(dictionary_size)])
-
+'''
+filestr = open(input_file, 'r')
+text = filestr.read()
+filestr.close()
+dictionary = {}
+for letter in text:
+    dictionary[letter] = ord(letter)
+'''
 # iterating through the codes.
 # LZW Decompression algorithm
 for code in compressed_data:
@@ -35,6 +43,8 @@ for code in compressed_data:
         next_code += 1
     string = dictionary[code]
 
+print(dictionary)
+print(decompressed_data)
 # storing the decompressed string into a file.
 out = input_file.split(".")[0]
 output_file = open(out + "_decoded.txt", "w")
