@@ -1,4 +1,5 @@
 import random
+import struct
 
 
 def zip(inp):
@@ -101,7 +102,19 @@ if __name__ == '__main__':
     inp = file.read()
     file.close()
 
-    print(inp)
+    print("{0:b}".format(inp[1]))
+
+    code = ''
+    for letter in inp:
+        code += str("{0:b}".format(letter))
+    print(code)
+
+    bytesarr = []
+    for _ in range(len(code) / 8):
+        for i in range(8):
+            
+        bytesarr.append(temp)
+    file = open()
     '''
     #inp = str('10110111001')
     #for
