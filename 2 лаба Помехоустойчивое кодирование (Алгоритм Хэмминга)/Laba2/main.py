@@ -158,24 +158,51 @@ if __name__ == '__main__':
     blocks = divider(stream, 11, 'right')
     print(f'Блоки:\n{blocks}\n')
 
-
-
     '''
     file = open(file_path.split('.')[0] + '_DAMAGED.txt', 'w')
     file.write(text)
     file.close()
     '''
     # Сохранение файла в коде
-    encoded_blocks = []
+    ZIPPED = []
+    encoded_blocks = ''
     for block in blocks:
         inp = block
-        encoded_blocks.append(zip(inp))
-    print(encoded_blocks)
-    '''
-    file = open(file_path.split('.')[0] + '_ENCODED.txt', 'w')
+        zipped = zip(inp)
+        encoded_blocks += zipped
+        ZIPPED.append(zipped)
+    #print(encoded_blocks)
+    bytesarr = divider(encoded_blocks, 8, 'left')
+    print(bytesarr)
+    text = ''
+    for byte in bytesarr:
+        text += chr(int(byte, 2))
+    print(text)
+
+    file = open(file_path.split('.')[0] + '_ENCODED.txt', 'w', encoding='utf-8')
     file.write(text)
     file.close()
-    '''
+
+    # Сохранение файла в коде с ошибками
+    DAMAGED = []
+    damaged_blocks = ''
+    for block in ZIPPED:
+        inp = block
+        damaged, index = doerror(block)
+        damaged_blocks += damaged
+        DAMAGED.append(damaged)
+    print(encoded_blocks)
+    bytesarr = divider(damaged_blocks, 8, 'left')
+    print(bytesarr)
+    text = ''
+    for byte in bytesarr:
+        text += chr(int(byte, 2))
+    print(text)
+
+    file = open(file_path.split('.')[0] + '_DAMAGED.txt', 'w', encoding='utf-8')
+    file.write(text)
+    file.close()
+
     '''
     for block in blocks:
         #inp = str('10110111001')
