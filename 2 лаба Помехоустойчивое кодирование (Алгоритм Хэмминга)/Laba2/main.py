@@ -67,28 +67,30 @@ def unzip(inp):
         summ %= 2
         if summ != ctrlBit:
             errors.append(power)
+    # Исправление ошибок
+    preoutput = inp
     if len(errors) == 0:
         print('Ошибок не найдено')
-        '''
-        for power in powers:
-            power -= 1
-        output = ''
-        for i in range(len(inp)):
-            if not i in powers:
-                output += inp[i]
-        print(f'Выходная последовательность: {output}')
-        '''
-        print(f'Выходная последовательность: {inp}\n')
-        return inp
     else:
         print(f'Контрольные биты с ошибкой: {errors}')
         # Исправление
         index = sum(errors) - 1
         print(f'Индекс бита с ошибкой: {sum(errors)}')
-        #output = inp[:index] + str(0) + inp[index + 1:] if inp[index] == '1' else inp[:index + 1] + str(1) + inp[index:]
-        output = inp[:index] + str(0) + inp[index + 1:] if inp[index] == '1' else inp[:index] + str(1) + inp[index + 1:]
-        print(f'Исправленная последовательность: {output}\n')
-        return output
+        #preoutput = inp[:index] + str(0) + inp[index + 1:] if inp[index] == '1' else inp[:index + 1] + str(1) + inp[index:]
+        preoutput = inp[:index] + str(0) + inp[index + 1:] if inp[index] == '1' else inp[:index] + str(1) + inp[index + 1:]
+        print(f'Исправленная последовательность: {preoutput}')
+
+    for power in range(len(powers)):
+        powers[power] -= 1
+    output = ''
+    for i in range(len(preoutput)):
+        if not i in powers:
+            output += preoutput[i]
+        else:
+            print(i)
+
+    print(f'Выходная последовательность: {output}\n')
+    return output
 
 
 def doerror(code: str):
@@ -181,7 +183,7 @@ def damagefile():
     for block in ZIPPED:
         damaged, index = doerror(block)
         damaged_blocks += damaged
-        indexes.append(index)
+        indexes.append(index + 1)
         DAMAGED.append(damaged)
     print(DAMAGED)
     print(indexes)
@@ -210,13 +212,13 @@ def unzipfile():
     print(bytesarr)
     text = ''
     for byte in bytesarr:
-        text += chr(int(byte, 2))
+        if int(byte, 2) != 0:
+            text += chr(int(byte, 2))
     print(text)
 
     file = open(FILE_PATH.split('.')[0] + '_UNZIPPED.txt', 'w', encoding='utf-8')
     file.write(text)
     file.close()
-    print()
 
 FILE_PATH = 'example.txt'
 ZIPPED = []
