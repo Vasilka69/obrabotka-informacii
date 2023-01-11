@@ -1,3 +1,4 @@
+import math
 import random
 import struct
 
@@ -96,14 +97,13 @@ def doerror(code: str):
             output += code[i]
     return output, index
 
-if __name__ == '__main__':
-    file_path = 'example.txt'
+def getbits(file_path):
     file = open(file_path, 'r')
     inp = file.read()
     file.close()
 
     code = ''.join(str(format(ord(byte), '08b') + ',') for byte in inp)[:-1]
-    print(code)
+    #print(code)
 
     '''
     code = ''
@@ -112,30 +112,77 @@ if __name__ == '__main__':
     print(code)
     '''
     bitsarr = code.split(',')
-    print(bitsarr)
+    #print(bitsarr)
 
     bytesarr = []
     for byte in bitsarr:
         bytesarr.append(int(byte, 2))
-    print(bytesarr)
+    #print(bytesarr)
 
     text = ''
     for char in bytesarr:
         text += (chr(char))
-    print(text)
+    #print(text)
 
+    stream = ''
+    for byte in bitsarr:
+        temp = ''
+        for bit in byte:
+            temp += bit
+        stream += temp
+    #print(stream)
+    return stream
+
+if __name__ == '__main__':
+    file_path = 'example.txt'
+
+    stream = getbits(file_path)
+    # Деление на блоки
+    blocks = []
+    '''
+    for block in range(math.ceil(len(stream) / 11)):
+        temp = ''
+        for i in range(11):
+            if block < len(stream):
+                temp += stream[block * 11 - 1 + i]
+            else:
+                temp += '0'
+        blocks.append(temp)
+    '''
+    temp = ''
+    for index in range(len(stream)):
+        if index % 11 != 0 or index == 0:
+            temp += stream[index]
+        else:
+            blocks.append(temp)
+            temp = stream[index]
+    temp += '0' * (11 - len(temp))
+    blocks.append(temp)
+    print(f'Блоки:\n{blocks}\n')
+
+
+
+    '''
     file = open(file_path.split('.')[0] + '_DAMAGED.txt', 'w')
     file.write(text)
+    file.close()
     #file = open()
     '''
-    #inp = str('10110111001')
-    #for
-    code = zip(inp)
-    print()
-    code, i = doerror(code)  # С ошибкой
-    pr = '001001100111001'
-    print(f'Код с ошибкой в {i+1} бите: {pr}')
-    print(f'Код с ошибкой в {i+1} бите: {code}')
-    unzip(code)
+    # Сохранение файла в коде
+    for block in blocks:
+        inp = block
+        code = zip(inp)
     '''
+    for block in blocks:
+        #inp = str('10110111001')
+        inp = block
+        code = zip(inp)
+        print()
+        code, i = doerror(code)  # С ошибкой
+        pr = '001001100111001'
+        print(f'Код с ошибкой в {i+1} бите: {pr}')
+        print(f'Код с ошибкой в {i+1} бите: {code}')
+        unzip(code)
+    '''
+
 
